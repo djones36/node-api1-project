@@ -74,7 +74,42 @@ server.post("/api/users", (req, res) => {
 
 // Delete user by id
 
-server.delete("/api/user/:id", (req, res) => {});
+server.delete("/api/user/:id", (req, res) => {
+  const id = req.params.id;
+  userData
+    .remove(id)
+    .then(user => {})
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: "The user information could not be modified." });
+    });
+});
+
+//Put request specificed to ID
+
+server.put("/api/user/:id", (req, res) => {
+  const iD = req.params.id;
+  const changes = req.body;
+  userData
+    .update(iD, changes)
+    .then(user => {
+      if (!changes.name || !changes.bio) {
+        res
+          .status(400)
+          .json({ errorMessage: "Please provide name and bio for the user." });
+      } else {
+        res
+          .status(404)
+          .json({ message: "The user with the specified ID does not exist." });
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: "The user information could not be modified." });
+    });
+});
 
 const port = 8000;
 server.listen(port, () =>
