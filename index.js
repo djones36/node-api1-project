@@ -89,15 +89,19 @@ server.delete("/api/user/:id", (req, res) => {
 //Put request specificed to ID
 
 server.put("/api/user/:id", (req, res) => {
-  const iD = req.params.id;
+  const id = req.params.id;
   const changes = req.body;
   userData
-    .update(iD, changes)
+    .update(id, changes)
     .then(user => {
-      if (!changes.name || !changes.bio) {
-        res
-          .status(400)
-          .json({ errorMessage: "Please provide name and bio for the user." });
+      if (user) {
+        if (!changes.name || !changes.bio) {
+          res.status(400).json({
+            errorMessage: "Please provide name and bio for the user."
+          });
+        } else {
+          res.status(200).json(user);
+        }
       } else {
         res
           .status(404)
