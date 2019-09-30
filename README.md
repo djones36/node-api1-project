@@ -57,7 +57,7 @@ Inside `index.js` add the code necessary to implement the following _endpoints_:
 | x      | GET            | /api/users                                                                                                                        | Returns an array of all the user objects contained in the database. |
 | X GET  | /api/users/:id | Returns the user object with the specified `id`.                                                                                  |
 | DELETE | /api/users/:id | Removes the user with the specified `id` and returns the deleted user.                                                            |
-| PUT    | /api/users/:id | Updates the user with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**. |
+| X PUT  | /api/users/:id | Updates the user with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**. |
 
 #### Endpoint Specifications
 
@@ -107,12 +107,12 @@ When the client makes a `DELETE` request to `/api/users/:id`:
   - return HTTP status code `404` (Not Found).
   - return the following JSON object: `{ message: "The user with the specified ID does not exist." }`.
 
-- If there's an error in removing the _user_ from the database:
+- X If there's an error in removing the _user_ from the database:
   - cancel the request.
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ error: "The user could not be removed" }`.
 
-When the client makes a `PUT` request to `/api/users/:id`:
+X When the client makes a `PUT` request to `/api/users/:id`:
 
 - If the _user_ with the specified `id` is not found:
 
