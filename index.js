@@ -72,6 +72,10 @@ server.post("/api/users", (req, res) => {
   }
 });
 
+// Delete user by id
+
+server.delete("/api/user/:id", (req, res) => {});
+
 const port = 8000;
 server.listen(port, () =>
   console.log("\nserver is running to be with its true love\n")
