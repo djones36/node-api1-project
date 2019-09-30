@@ -52,7 +52,25 @@ server.get("/api/users/:id", (req, res) => {
 });
 
 //Add a new User
-server.post("/api/users"), (req, res) => {};
+server.post("/api/users", (req, res) => {
+  const userInfo = req.body;
+  if (!userInfo.name || !userInfo.bio) {
+    res
+      .status(400)
+      .json({ errorMessage: "Please provide name and bio for the user." });
+  } else {
+    userData
+      .insert(user)
+      .then(user => {
+        res.json(user);
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: "There was an error while saving the user to the database"
+        });
+      });
+  }
+});
 
 const port = 8000;
 server.listen(port, () =>
