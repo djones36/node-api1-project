@@ -60,9 +60,9 @@ server.post("/api/users", (req, res) => {
       .json({ errorMessage: "Please provide name and bio for the user." });
   } else {
     userData
-      .insert(user)
+      .insert(userInfo)
       .then(user => {
-        res.json(user);
+        res.status(201).json("Create", user);
       })
       .catch(err => {
         res.status(500).json({
