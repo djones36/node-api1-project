@@ -15,10 +15,12 @@ server.get("/api/users", (req, res) => {
   userData
     .find()
     .then(user => {
-      res.send(user);
+      res.status(200).json(user);
     })
     .catch(err => {
-      res.send(err);
+      res
+        .status(500)
+        .json({ error: "The users information could not be retrieved." });
     });
 });
 
