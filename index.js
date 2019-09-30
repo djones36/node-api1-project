@@ -11,7 +11,7 @@ server.use(express.json());
 //Server is alive
 server.get("/", (req, res) => {
   res.send(
-    "Hello friend! Please join us on our journey through the realm of Node!"
+    "Hello friend! Please join us on our journey through the magical realm of Node!"
   );
 });
 
@@ -78,7 +78,13 @@ server.delete("/api/user/:id", (req, res) => {
   const id = req.params.id;
   userData
     .remove(id)
-    .then(user => {})
+    .then(user => {
+        if(){
+            res.status(200).json({ message: user, 'deleted'})
+        }else{
+            res.status(404).json({ message: "The user with the specified ID does not exist." })
+        }
+    })
     .catch(err => {
       res
         .status(500)
