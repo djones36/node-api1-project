@@ -76,15 +76,18 @@ server.post("/api/users", (req, res) => {
 
 server.delete("/api/user/:id", (req, res) => {
   const id = req.params.id;
-  userData.findById(id)
-    
+  userData
+    .findById(id)
+
     .then(user => {
-        if(user){
-            res.status(200).json({ message: user, 'deleted'})
-            userData.remove(id)
-        }else{
-            res.status(404).json({ message: "The user with the specified ID does not exist." })
-        }
+      if (user) {
+        res.status(200).json({ message: user }, "deleted");
+        userData.remove(id);
+      } else {
+        res
+          .status(404)
+          .json({ message: "The user with the specified ID does not exist." });
+      }
     })
     .catch(err => {
       res
