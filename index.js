@@ -78,31 +78,37 @@ server.post("/api/users", (req, res) => {
 
 // Delete user by id
 
-server.delete("/api/user/:id", (req, res) => {
+server.delete("/api/users/:id", (req, res) => {
   const id = req.params.id;
   userData
     .findById(id)
-
     .then(user => {
-      if (user) {
-        res.status(200).json({ message: user }, "deleted");
-        userData.remove(id);
-      } else {
-        res
-          .status(404)
-          .json({ message: "The user with the specified ID does not exist." });
-      }
+      console.log(user);
+      userData.remove(user.id).then(() => {
+        res.status(200).json({ message: "deleted", deleted: user });
+      });
     })
     .catch(err => {
-      res
-        .status(500)
-        .json({ error: "The user information could not be modified." });
+      res.status(500).json(err);
     });
+  // userData
+  //   .remove(id)
+
+  //   .then(user => {
+  //     res.status(200).json("deleted");
+  //     // if (user) {
+  //     //   res.status(200).json({ message: user }, "deleted");
+  //     // } else {
+  //     //   res
+  //     //     .status(404)
+  //     //     .json({ message: "The user with the specified ID does not exist." });
+  //     // }
+  //   })
 });
 
 //Put request specificed to ID
 
-server.put("/api/user/:id", (req, res) => {
+server.put("/api/users/:id", (req, res) => {
   const id = req.params.id;
   const changes = req.body;
   userData
@@ -114,7 +120,10 @@ server.put("/api/user/:id", (req, res) => {
             errorMessage: "Please provide name and bio for the user."
           });
         } else {
-          res.status(200).json(user);
+          userData.findById(user).then(updateUser => {
+            res.status(200).json(updateUser);
+          })
+
         }
       } else {
         res
