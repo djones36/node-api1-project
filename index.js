@@ -62,7 +62,11 @@ server.post("/api/users", (req, res) => {
     userData
       .insert(userInfo)
       .then(user => {
-        res.status(201).json("Create", user);
+        console.log(user);
+        userData.findById(user.id).then(newUser => {
+          console.log(newUser);
+          res.status(201).json(newUser);
+        });
       })
       .catch(err => {
         res.status(500).json({
